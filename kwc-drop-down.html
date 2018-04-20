@@ -1,4 +1,5 @@
-<link rel="import" href="../../polymer/polymer.html">
+<!-- <link rel="import" href="../../polymer/polymer.html"> -->
+<link rel="import" href="../polymer/polymer-element.html">
 
 <!--
 `kwc-drop-down` is a simple tooltip like drop-down box
@@ -52,7 +53,6 @@ Custom property | Description | Default
                 right: 0px;
             }
             b.caret {
-                /* position: absolute; */
                 display: block;
                 margin: 0 var(--kwc-drop-down-caret-padding, 10px);
                 padding: 0;
@@ -71,7 +71,7 @@ Custom property | Description | Default
                 margin: 0 auto;
             }
         </style>
-        <div class="drop-down" id="drop">
+        <div class$="drop-down [[align]]" id="drop">
             <b class$="caret [[caretPosition]]" id="caret"></b>
             <div class="content">
                 <slot></slot>
@@ -79,48 +79,57 @@ Custom property | Description | Default
         </div>
     </template>
     <script>
-        Polymer({
-            is: 'kwc-drop-down',
-            properties: {
-                /**
-                 * Position of the caret (left, right or center).
-                 *
-                 * @type {String}
-                 */
-                caretPosition: {
-                    type: String,
-                    value: 'left',
-                    // observer: '_caretPositionChanged'
-                },
-                /**
-                 * Alignment of the drop-down relative to the top-left corner of the
-                 * element in DOM (left, right or center).
-                 *
-                 * @type {String}
-                 */
-                align: {
-                    type: String,
-                    value: 'left',
-                    observer: '_alignChanged'
-                }
-            },
-            ready () {
+        class KWCDropDown extends Polymer.Element {
+            static get is() {
+                return 'kwc-drop-down';
+            }
+
+            static get properties() {
+                return {
+                    /**
+                    * Position of the caret (left, right or center).
+                    *
+                    * @type {String}
+                    */
+                    caretPosition: {
+                        type: String,
+                        value: 'left'
+                    },
+                    /**
+                    * Alignment of the drop-down relative to the top-left corner of the
+                    * element in DOM (left, right or center).
+                    *
+                    * @type {String}
+                    */
+                    align: {
+                        type: String,
+                        value: 'left'
+                    }
+                };
+            }
+
+            ready() {
+                super.ready();
+
                 this.opened = false;
-            },
+            }
+
             /**
              * Hides the dropdown
              */
             close() {
                 this.opened = false;
                 this.style.display = 'none';
-            },
+            }
+
             /**
              * Displays the dropdown
              */
             open() {
                 this.opened = true;
                 this.style.display = 'inline-block';
-            },
+            }
+
             /**
              * Toggles between opened and closed
              */
@@ -130,13 +139,13 @@ Custom property | Description | Default
                 } else {
                     this.close();
                 }
-            },
+            }
+
             _alignChanged(alignment) {
                 this.toggleClass(alignment, true, this.$.drop);
-            },
-            // _caretPositionChanged(position) {
-            //     this.toggleClass(position, true, this.$.caret);
-            // }
-        });
+            }
+        }
+
+        customElements.define(KWCDropDown.is, KWCDropDown);
     </script>
 </dom-module>
