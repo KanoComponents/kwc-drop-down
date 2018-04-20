@@ -1,0 +1,82 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../kwc-style/color.html">
+<link rel="import" href="../kwc-style/typography.html">
+<link rel="import" href="../kwc-icons/kwc-icons.html">
+
+<!--
+`kwc-drop-down-item` is designed to be used as an item in a list inside `kwc-drop-down` you can add any content to it and an icon
+
+Example:
+    <kwc-drop-down-item icon="/assets/my-icon.png">
+        <span>My message</span>
+    </kwc-drop-down-item>
+
+@group Kano Elements
+
+-->
+
+<dom-module id="kwc-drop-down-item">
+    <template>
+        <style>
+            :host {
+                @apply --layout-horizontal;
+                @apply --layout-center;
+                padding: 0px 12px;
+
+                /* display: block; */
+                font-family: var(--font-body);
+                color: var(--color-chateau);
+                font-weight: bold;
+                font-size: 16px;
+            }
+            :host(:first-child) {
+                margin-top: 4px;
+            }
+            :host(:last-child) {
+                margin-bottom: 8px;
+            }
+            :host(:hover) {
+                background-color: var(--color-porcelain);
+                cursor: pointer;
+            }
+            .content {
+                @apply --layout-flex;
+                margin-top: 12px;
+                margin-bottom: 14px;
+            }
+            iron-icon {
+                width: 18px;
+                height: 18px;
+                margin: 2px 14px 2px 2px;
+
+                color: var(--color-chateau);
+            }
+        </style>
+        <template is="dom-if" if="[[_hasIcon]]">
+            <iron-icon icon="[[icon]]"></iron-icon>
+        </template>
+        <div class$="content [[_computeExtraMarginClass(_hasIcon)]]">
+            <slot></slot>
+        </div>
+    </template>
+</dom-module>
+<script type="text/javascript">
+    Polymer({
+        is: 'kwc-drop-down-item',
+        properties: {
+            icon: {
+                type: String,
+                value: null
+            },
+            _hasIcon: {
+                type: Boolean,
+                computed: '_computeHasIcon(icon)'
+            }
+        },
+        _computeHasIcon(icon) {
+            return !!icon;
+        }
+    });
+</script>

@@ -32,7 +32,7 @@ Custom property | Description | Default
         <style>
             :host {
                 cursor: auto;
-                display: inline-block;
+                z-index: 1;
                 position: absolute;
                 display: none;
             }
@@ -127,7 +127,7 @@ Custom property | Description | Default
              */
             open() {
                 this.opened = true;
-                this.style.display = 'inline-block';
+                this.style.display = 'block';
             }
 
             /**

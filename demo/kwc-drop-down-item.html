@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>kwc-drop-down-item demo</title>
+
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+        <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+        <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+        <link rel="import" href="../kwc-drop-down.html">
+        <link rel="import" href="../kwc-drop-down-item.html">
+
+        <custom-style>
+            <style is="custom-style" include="demo-pages-shared-styles">
+                demo-snippet {
+                    --demo-snippet-demo: {
+                        position: relative;
+                        background: #E0E0E0;
+                    };
+                }
+
+                kwc-drop-down-item {
+                    min-width: 150px;
+                }
+            </style>
+        </custom-style>
+    </head>
+    <body unresolved>
+        <div class="vertical-section-container centered">
+            <h3>Simple item</h3>
+            <demo-snippet>
+                <template>
+                    <kwc-drop-down-item>
+                        <div>hey</div>
+                    </kwc-drop-down-item>
+                </template>
+            </demo-snippet>
+        </div>
+        <div class="vertical-section-container centered">
+            <h3>Example menu</h3>
+            <demo-snippet>
+                <template>
+                    <button name="1">Toggle</button>
+                    <kwc-drop-down id="1" caret-position="center">
+                        <kwc-drop-down-item icon="dummy">Add to kit</kwc-drop-down-item>
+                        <kwc-drop-down-item icon="kwc-ui-icons:rubbish-bin">Delete</kwc-drop-down-item>
+                        <kwc-drop-down-item icon="kwc-ui-icons:staff-pick">Staff pick</kwc-drop-down-item>
+                    </kwc-drop-down>
+                </template>
+            </demo-snippet>
+        </div>
+        <script type="text/javascript">
+            document.addEventListener('WebComponentsReady', () => {
+                var buttons = document.getElementsByTagName('button');
+
+                for (let i = 0; i < buttons.length; i++) {
+                    buttons[i].addEventListener('click', () => {
+                        ((button) => {
+                            document.getElementById(button.getAttribute('name')).toggle();
+                        })(buttons[i])
+                    })
+                }
+            });
+        </script>
+    </body>
+</html>
