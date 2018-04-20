@@ -1,0 +1,142 @@
+<link rel="import" href="../../polymer/polymer.html">
+
+<!--
+`kwc-drop-down` is a simple tooltip like drop-down box
+
+Example:
+
+    <kwc-drop-down>
+        <ul>
+            <li>One</li>
+            <li>Two</li>
+        </ul>
+    </kwc-drop-down>
+
+    <kwc-drop-down caret-align="right">
+        <img src="/my-img.png"/>
+    </kwc-drop-down>
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--kwc-drop-down` | Mixin applied to the drop-down | `{}`
+`--kwc-drop-down-background-color` | Background color of the dropdown | `white`
+`--kwc-drop-down-caret-padding` | Distance of the caret from the border | `25px`
+
+@group Kano Elements
+@demo ./demo/kwc-drop-down.html
+-->
+
+<dom-module id="kwc-drop-down">
+    <template>
+        <style>
+            :host {
+                cursor: auto;
+                display: inline-block;
+                position: absolute;
+                display: none;
+            }
+            .drop-down {
+                position: absolute;
+                left: 0px;
+                display: inline-block;
+            }
+            .content {
+                box-shadow: 0px 4px 4px rgba(0,0,0,0.15);
+                background-color: var(--kwc-drop-down-background-color, white);
+                border-radius: 6px;
+                overflow: hidden;
+                @apply --kwc-drop-down;
+            }
+            .drop-down.right {
+                left: auto;
+                right: 0px;
+            }
+            b.caret {
+                /* position: absolute; */
+                display: block;
+                margin: 0 var(--kwc-drop-down-caret-padding, 10px);
+                padding: 0;
+                width: 0;
+                height: 0;
+                border-top: 0;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-bottom: 8px solid var(--kwc-drop-down-background-color, white);
+            }
+            b.caret.right {
+                margin: 0 auto;
+                margin-right: var(--kwc-drop-down-caret-padding, 10px);
+            }
+            b.caret.center {
+                margin: 0 auto;
+            }
+        </style>
+        <div class="drop-down" id="drop">
+            <b class$="caret [[caretPosition]]" id="caret"></b>
+            <div class="content">
+                <slot></slot>
+            </div>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'kwc-drop-down',
+            properties: {
+                /**
+                 * Position of the caret (left, right or center).
+                 *
+                 * @type {String}
+                 */
+                caretPosition: {
+                    type: String,
+                    value: 'left',
+                    // observer: '_caretPositionChanged'
+                },
+                /**
+                 * Alignment of the drop-down relative to the top-left corner of the
+                 * element in DOM (left, right or center).
+                 *
+                 * @type {String}
+                 */
+                align: {
+                    type: String,
+                    value: 'left',
+                    observer: '_alignChanged'
+                }
+            },
+            ready () {
+                this.opened = false;
+            },
+            /**
+             * Hides the dropdown
+             */
+            close() {
+                this.opened = false;
+                this.style.display = 'none';
+            },
+            /**
+             * Displays the dropdown
+             */
+            open() {
+                this.opened = true;
+                this.style.display = 'inline-block';
+            },
+            /**
+             * Toggles between opened and closed
+             */
+            toggle() {
+                if (!this.opened) {
+                    this.open();
+                } else {
+                    this.close();
+                }
+            },
+            _alignChanged(alignment) {
+                this.toggleClass(alignment, true, this.$.drop);
+            },
+            // _caretPositionChanged(position) {
+            //     this.toggleClass(position, true, this.$.caret);
+            // }
+        });
+    </script>
+</dom-module>

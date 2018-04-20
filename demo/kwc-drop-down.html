@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+        <script type="text/javascript">
+            window.Polymer = {
+                dom: 'shadow'
+            };
+        </script>
+        <link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
+        <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+        <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+        <link rel="import" href="../../paper-button/paper-button.html">
+        <link rel="import" href="../../kwc-style/typography.html">
+        <link rel="import" href="../../kwc-style/color.html">
+        <link rel="import" href="../kwc-drop-down.html">
+        <custom-style>
+            <style is="custom-style" include="demo-pages-shared-styles">
+                demo-snippet {
+                    --demo-snippet-demo: {
+                        position: relative;
+                        background: #E0E0E0;
+                    };
+                }
+                paper-button {
+                    display: block;
+                }
+                kwc-drop-down {
+                    z-index: 1;
+                }
+                kwc-drop-down.three {
+                    --kwc-drop-down-background-color: var(--color-rhubarb);
+                    --kwc-drop-down-caret-padding: 4px;
+                }
+                kwc-drop-down.four {
+                    --kwc-drop-down-caret-padding: 7px;
+                    left: 300px;
+                }
+                kwc-drop-down.five {
+                    left: 150px;
+                }
+                ul {
+                    list-style: none;
+                    margin: 0;
+                    padding: 20px;
+                }
+                img {
+                    max-width: 350px;
+                }
+            </style>
+        </custom-style>
+    </head>
+    <body>
+        <div class="vertical-section-container centered">
+            <h3>Caret position left</h3>
+            <demo-snippet class="centered">
+                <template>
+                    <paper-button name="1">Toggle</paper-button>
+                    <kwc-drop-down id="1">
+                        <ul>
+                            <li>One</li>
+                            <li>Two</li>
+                            <li>Three</li>
+                        </ul>
+                    </kwc-drop-down>
+                </template>
+            </demo-snippet>
+            <h3>Caret position right</h3>
+            <demo-snippet class="centered">
+                <template>
+                    <paper-button name="2">Toggle</paper-button>
+                    <kwc-drop-down id="2" caret-position="right">
+                        <ul>
+                            <li>One</li>
+                            <li>Two</li>
+                            <li>Three</li>
+                        </ul>
+                    </kwc-drop-down>
+                </template>
+            </demo-snippet>
+            <h3>Caret position left, padding of 4px</h3>
+            <demo-snippet class="centered">
+                <template>
+                    <paper-button name="3">Toggle</paper-button>
+                    <kwc-drop-down  id="3" class="three">
+                        <ul>
+                            <li>One</li>
+                            <li>Two</li>
+                            <li>Three</li>
+                        </ul>
+                    </kwc-drop-down>
+                </template>
+            </demo-snippet>
+            <h3>Aligned right, caret position right, padding of 7px</h3>
+            <demo-snippet class="centered">
+                <template>
+                    <paper-button name="4">Toggle</paper-button>
+                    <kwc-drop-down id="4" caret-position="right" align="right" class="four">
+                        <img src="http://www.top13.net/wp-content/uploads/2015/10/perfectly-timed-funny-cat-pictures-5.jpg" />
+                    </kwc-drop-down>
+                </template>
+            </demo-snippet>
+            <h3>Caret centred, aligned left</h3>
+            <demo-snippet class="centered">
+                <template>
+                    <paper-button name="5">Toggle</paper-button>
+                    <kwc-drop-down id="5" caret-position="center" class="five">
+                        <ul>
+                            <li>One</li>
+                            <li>Two</li>
+                            <li>Three</li>
+                        </ul>
+                    </kwc-drop-down>
+                </template>
+            </demo-snippet>
+        </div>
+        <script type="text/javascript">
+            document.addEventListener('WebComponentsReady', () => {
+                var buttons = document.getElementsByTagName('paper-button');
+
+                for (let i = 0; i < buttons.length; i++) {
+                    buttons[i].addEventListener('tap', () => {
+                        ((button) => {
+                            document.getElementById(button.getAttribute('name')).toggle();
+                        })(buttons[i])
+                    })
+                }
+            });
+        </script>
+    </body>
+</html>
