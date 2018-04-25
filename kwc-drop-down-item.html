@@ -60,7 +60,7 @@ Example:
         <template is="dom-if" if="[[_hasIcon]]">
             <iron-icon icon="[[icon]]"></iron-icon>
         </template>
-        <div class$="content [[_computeExtraMarginClass(_hasIcon)]]">
+        <div class="content">
             <slot></slot>
         </div>
     </template>
@@ -69,6 +69,12 @@ Example:
     Polymer({
         is: 'kwc-drop-down-item',
         properties: {
+            /**
+             * An optional icon to be shown on the left side of the item.
+             * Takes an iron-icon identifier.
+             *
+             * @type {String}
+             */
             icon: {
                 type: String,
                 value: null
