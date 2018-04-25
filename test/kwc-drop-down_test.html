@@ -22,7 +22,7 @@
       suite('kwc-drop-down', function() {
         test('instantiating the element works', function() {
           var element = fixture('basic');
-          assert.equal(element.is, 'kwc-drop-down');
+          assert.instanceOf(element, KWCDropDown);
         });
       });
     </script>

@@ -66,26 +66,34 @@ Example:
     </template>
 </dom-module>
 <script type="text/javascript">
-    Polymer({
-        is: 'kwc-drop-down-item',
-        properties: {
-            /**
-             * An optional icon to be shown on the left side of the item.
-             * Takes an iron-icon identifier.
-             *
-             * @type {String}
-             */
-            icon: {
-                type: String,
-                value: null
-            },
-            _hasIcon: {
-                type: Boolean,
-                computed: '_computeHasIcon(icon)'
-            }
-        },
+    class KWCDropDownItem extends Polymer.Element {
+        static get is() {
+            return 'kwc-drop-down-item';
+        }
+
+        static get properties() {
+            return {
+                /**
+                * An optional icon to be shown on the left side of the item.
+                * Takes an iron-icon identifier.
+                *
+                * @type {String}
+                */
+                icon: {
+                    type: String,
+                    value: null
+                },
+                _hasIcon: {
+                    type: Boolean,
+                    computed: '_computeHasIcon(icon)'
+                }
+            };
+        }
+
         _computeHasIcon(icon) {
             return !!icon;
         }
-    });
+    }
+
+    customElements.define(KWCDropDownItem.is, KWCDropDownItem);
 </script>
