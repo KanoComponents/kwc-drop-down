@@ -1,4 +1,3 @@
-<!-- <link rel="import" href="../../polymer/polymer.html"> -->
 <link rel="import" href="../polymer/polymer-element.html">
 
 <!--
@@ -40,10 +39,10 @@ Custom property | Description | Default
                 position: absolute;
                 left: 0px;
                 display: inline-block;
-                filter: drop-shadow(0 -1px 0 #e3e5e6)
-                        drop-shadow(0 1px 0 #e3e5e6)
-                        drop-shadow(1px 0px 0 #e3e5e6)
-                        drop-shadow(-1px 0px 0 #e3e5e6);
+                filter: drop-shadow(0 -1px 0 rgba(0,0,0,0.08))
+                        drop-shadow(0 1px 0  rgba(0,0,0,0.08))
+                        drop-shadow(1px 0px 0  rgba(0,0,0,0.08))
+                        drop-shadow(-1px 0px 0  rgba(0,0,0,0.08));
             }
             .content {
                 box-shadow: 0px 4px 4px rgba(0,0,0,0.10);
@@ -108,14 +107,24 @@ Custom property | Description | Default
                     align: {
                         type: String,
                         value: 'left'
+                    },
+                    opened: {
+                        type: Boolean,
+                        notify: true
                     }
                 };
             }
 
             ready() {
-                super.ready();
-
                 this.opened = false;
+
+                this._autoCloseCallback = () => {
+                    this.close();
+                };
+
+                this.addEventListener('click', this._onClick);
+
+                super.ready();
             }
 
             /**
@@ -124,14 +133,22 @@ Custom property | Description | Default
             close() {
                 this.opened = false;
                 this.style.display = 'none';
+
+                window.removeEventListener('click', this._autoCloseCallback);
             }
 
             /**
              * Displays the dropdown
              */
-            open() {
-                this.opened = true;
-                this.style.display = 'block';
+            open(e) {
+                if (!this.opened) {
+                    this.opened = true;
+                    this.style.display = 'block';
+
+                    setTimeout(() => {
+                        window.addEventListener('click', this._autoCloseCallback);
+                    }, 0);
+                }
             }
 
             /**
@@ -147,6 +164,10 @@ Custom property | Description | Default
 
             _alignChanged(alignment) {
                 this.toggleClass(alignment, true, this.$.drop);
+            }
+
+            _onClick (e) {
+                e.stopPropagation();
             }
         }
 
