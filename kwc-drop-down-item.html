@@ -13,6 +13,12 @@ Example:
         <span>My message</span>
     </kwc-drop-down-item>
 
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--kwc-drop-down-item-icon-color` | Color of the icon | --color-grey
+`--kwc-drop-down-item-icon-color` | Hover color of the icon | --color-chateau
+
 @group Kano Elements
 @demo ./demo/kwc-drop-down-item.html
 -->
@@ -51,10 +57,10 @@ Example:
                 height: 18px;
                 margin: 2px 14px 2px 2px;
 
-                color: var(--color-grey);
+                color: var(--kwc-drop-down-item-icon-color, var(--color-grey));
             }
             :host(:hover) iron-icon {
-                color: var(--color-chateau);
+                color: var(--kwc-drop-down-item-icon-hover-color, var(--color-chateau));
             }
         </style>
         <template is="dom-if" if="[[_hasIcon]]">
