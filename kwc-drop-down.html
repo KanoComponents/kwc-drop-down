@@ -115,16 +115,19 @@ Custom property | Description | Default
                 };
             }
 
-            ready() {
+            constructor() {
+                super();
                 this.opened = false;
+                this._onClick = this.onClick.bind(this);
+            }
 
-                this._autoCloseCallback = () => {
-                    this.close();
-                };
-
-                this.addEventListener('click', this._onClick);
-
-                super.ready();
+            connectedCallback() {
+                super.connectedCallback();
+                window.addEventListener('click', this._onClick);
+            }
+            disconnectedCallback() {
+                super.disconnectedCallback();
+                window.removeEventListener('click', this._onClick);
             }
 
             /**
@@ -167,7 +170,10 @@ Custom property | Description | Default
             }
 
             _onClick (e) {
-                e.stopPropagation();
+                const { path } = e;
+                if (this.opened && path.indexOf(this) === -1) {
+                    this.close();
+                }
             }
         }
 
