@@ -118,7 +118,7 @@ Custom property | Description | Default
             constructor() {
                 super();
                 this.opened = false;
-                this._onClick = this.onClick.bind(this);
+                this._onClick = this._onClick.bind(this);
             }
 
             connectedCallback() {
