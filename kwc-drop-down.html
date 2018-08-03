@@ -121,15 +121,6 @@ Custom property | Description | Default
                 this._onClick = this._onClick.bind(this);
             }
 
-            connectedCallback() {
-                super.connectedCallback();
-                window.addEventListener('click', this._onClick);
-            }
-            disconnectedCallback() {
-                super.disconnectedCallback();
-                window.removeEventListener('click', this._onClick);
-            }
-
             /**
              * Hides the dropdown
              */
@@ -137,7 +128,7 @@ Custom property | Description | Default
                 this.opened = false;
                 this.style.display = 'none';
 
-                window.removeEventListener('click', this._autoCloseCallback);
+                window.removeEventListener('click', this._onClick);
             }
 
             /**
@@ -149,7 +140,7 @@ Custom property | Description | Default
                     this.style.display = 'block';
 
                     setTimeout(() => {
-                        window.addEventListener('click', this._autoCloseCallback);
+                        window.addEventListener('click', this._onClick);
                     }, 0);
                 }
             }
@@ -170,7 +161,7 @@ Custom property | Description | Default
             }
 
             _onClick (e) {
-                const { path } = e;
+                const path = e.path || e.composedPath();
                 if (this.opened && path.indexOf(this) === -1) {
                     this.close();
                 }
