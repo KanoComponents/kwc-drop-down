@@ -1,11 +1,4 @@
-<link rel="import" href="../polymer/polymer-element.html">
-<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="../iron-icon/iron-icon.html">
-<link rel="import" href="../kwc-style/color.html">
-<link rel="import" href="../kwc-style/typography.html">
-<link rel="import" href="../kwc-icons/kwc-icons.html">
-
-<!--
+/**
 `kwc-drop-down-item` is designed to be used as an item in a list inside `kwc-drop-down` you can add any content to it and an icon
 
 Example:
@@ -23,10 +16,23 @@ Custom property | Description | Default
 
 @group Kano Elements
 @demo ./demo/kwc-drop-down-item.html
--->
+*/
+/*
+  FIXME(polymer-modulizer): the above comments were extracted
+  from HTML and may be out of place here. Review them and
+  then delete this comment!
+*/
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
-<dom-module id="kwc-drop-down-item">
-    <template>
+import '@polymer/iron-flex-layout/iron-flex-layout.js';
+import '@polymer/iron-icon/iron-icon.js';
+import '@kano/kwc-style/color.js';
+import '@kano/kwc-style/typography.js';
+import '@kano/kwc-icons/kwc-icons.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+class KWCDropDownItem extends PolymerElement {
+  static get template() {
+    return html`
         <style>
             :host {
                 @apply --layout-horizontal;
@@ -75,37 +81,35 @@ Custom property | Description | Default
         <div class="content">
             <slot></slot>
         </div>
-    </template>
-</dom-module>
-<script type="text/javascript">
-    class KWCDropDownItem extends Polymer.Element {
-        static get is() {
-            return 'kwc-drop-down-item';
-        }
+`;
+  }
 
-        static get properties() {
-            return {
-                /**
-                * An optional icon to be shown on the left side of the item.
-                * Takes an iron-icon identifier.
-                *
-                * @type {String}
-                */
-                icon: {
-                    type: String,
-                    value: null
-                },
-                _hasIcon: {
-                    type: Boolean,
-                    computed: '_computeHasIcon(icon)'
-                }
-            };
-        }
+  static get is() {
+      return 'kwc-drop-down-item';
+  }
 
-        _computeHasIcon(icon) {
-            return !!icon;
-        }
-    }
+  static get properties() {
+      return {
+          /**
+          * An optional icon to be shown on the left side of the item.
+          * Takes an iron-icon identifier.
+          *
+          * @type {String}
+          */
+          icon: {
+              type: String,
+              value: null
+          },
+          _hasIcon: {
+              type: Boolean,
+              computed: '_computeHasIcon(icon)'
+          }
+      };
+  }
 
-    customElements.define(KWCDropDownItem.is, KWCDropDownItem);
-</script>
+  _computeHasIcon(icon) {
+      return !!icon;
+  }
+}
+
+customElements.define(KWCDropDownItem.is, KWCDropDownItem);
